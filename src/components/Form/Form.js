@@ -1,17 +1,31 @@
 import css from './Form.module.css'
+import React from "react";
 
 
-export const Form = ({ onSubmit }) => {
-    const handleSubmit = event => {
-        event.preventDefault();
-        onSubmit(
-          event.target.elements.name.value,
-          event.target.elements.number.value
-        )
-    }
+export class Form extends React.Component {
+  
+  state = { 
+    name: '',
+    number: '',
+   };
+  
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.onSubmit(
+      event.target.elements.name.value,
+      event.target.elements.number.value
+    )
+    this.reset();
+  }
+  
+  reset = () => {
+    this.setState({ name: '', number: '' });
+  };
 
+
+  render() {
     return (
-       <form onSubmit={handleSubmit} className={css.form}>
+      <form onSubmit={this.handleSubmit} className={css.form}>
         <label>
           Name
           <input className={css.input}
@@ -34,6 +48,7 @@ export const Form = ({ onSubmit }) => {
         </label>
 
         <button type="submit" className={css.btn}>Add contact</button>
-      </form> 
+      </form>
     )
+  }
 }
